@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAZE | Advanced Management Engine</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for Pro Cyberpunk Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Premium custom style layer for glassmorphism and ambient glowing boundaries */
+        .glass-panel {
+            background: rgba(11, 16, 31, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        .neon-glow-purple:focus {
+            border-color: rgb(168, 85, 247);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+        .neon-glow-blue:focus {
+            border-color: rgb(59, 130, 246);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        /* Custom scrollbar structural styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060913;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="bg-[#05070f] text-gray-100 min-h-screen font-sans antialiased selection:bg-purple-600 selection:text-white relative overflow-x-hidden">
+
+    <!-- Ambient Grid Cyberpunk Lighting Effects Layer -->
+    <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-20 left-10 w-[450px] h-[450px] bg-pink-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <!-- MAIN DASHBOARD HEADER APPLICATION NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 border-b border-gray-800/60 bg-[#0a0d1a]/80 backdrop-blur-2xl px-8 py-5 flex justify-between items-center shadow-2xl">
+        <div class="flex items-center gap-4">
+            <div class="w-11 h-11 bg-gradient-to-br from-purple-600 via-purple-700 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group">
+                <i class="fa-solid fa-bolt text-xl text-white animate-pulse group-hover:scale-110 transition-transform"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">HAZE</span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded font-bold uppercase">PRO</span>
+                </div>
+                <span class="text-xs block font-mono text-purple-400/80 tracking-widest uppercase mt-0.5">Management Engine System v1.2.0</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-6">
+            <!-- Server State Verification Badge -->
+            <div class="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900/90 border border-gray-800 font-mono text-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-gray-400">DATABASE STATUS LINKAGE:</span>
+                <span class="text-emerald-400 font-black">ONLINE</span>
+            </div>
+            <!-- Terminal Admin User Profile Frame -->
+            <div class="flex items-center gap-3 border-l border-gray-800/80 pl-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-bold tracking-wide text-gray-200">Thomas Terminal</p>
+                    <p class="text-xs font-mono text-purple-400/70 uppercase tracking-wider">Master Root Admin</p>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-purple-500/40 flex items-center justify-center text-purple-400 font-black shadow-lg">
+                    TT
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CORE PANEL DISPLAY INTERFACE WRAPPER CONTAINER -->
+    <main class="max-w-[1700px] mx-auto p-6 lg:p-8 space-y-8">
+        
+        <!-- LIVE RUNTIME HARDWARE & TRANSACTION ANALYTICS METRICS BAR -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Metric 1: Total Allocated Database Keys -->
+            <div class="glass-panel rounded-2xl p-6 flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300">
+                <div class="space-y-2 z-10">
+                    <p class="text-xs font-mono text-gray-400 uppercase tracking-widest font-semibold">Total Registered Keys</p>
+                    <h3 class="text-4xl font-black font-mono text-white tracking-tight">
+                        {% if keys %}{{ keys|length }}{% else %}0{% endif %}
+                    </h3>
+                    <p class="text-[11px] text-purple-400 font-mono flex items-center gap-1.5">
+                        <i class="fa-solid fa-database animate-pulse"></i> LIVE FILE ALLOCATIONS
+                    </p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 text-purple-400 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-300 shadow-inner">
+                    <i class="fa-solid fa-key text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Metric 2: Live Computed 1-Day Pass Inventory Tracker -->
+            <div class="glass-panel rounded-2xl p-6 flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300">
+                <div class="space-y-2 z-10">
+                    <p class="text-xs font-mono text-gray-400 uppercase tracking-widest font-semibold">1-Day Active Passes</p>
+                    <h3 class="text-4xl font-black font-mono text-amber-400 tracking-tight">
+                        {% set count_1d = id | default(0) %}
+                        {% if keys %}
+                            {% for k, v in keys.items() %}
+                                {% if '1 Day' in v.plan or '1DAY' in k %}
+                                    {% set count_1d = count_1d + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {{ count_1d }}
+                    </h3>
+                    <p class="text-[11px] text-amber-500/80 font-mono flex items-center gap-1.5">
+                        <i class="fa-solid fa-stopwatch"></i> DYNAMIC METRIC MATCH
+                    </p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-400 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all duration-300 shadow-inner">
+                    <i class="fa-solid fa-hourglass-start text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Metric 3: Live Computed 7-Days Pro Premium Inventory Tracker -->
+            <div class="glass-panel rounded-2xl p-6 flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all duration-300">
+                <div class="space-y-2 z-10">
+                    <p class="text-xs font-mono text-gray-400 uppercase tracking-widest font-semibold">7-Days Pro Modules</p>
+                    <h3 class="text-4xl font-black font-mono text-blue-400 tracking-tight">
+                        {% set count_7d = id | default(0) %}
+                        {% if keys %}
+                            {% for k, v in keys.items() %}
+                                {% if '7 Days' in v.plan or '7DAYS' in k %}
+                                    {% set count_7d = count_7d + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {{ count_7d }}
+                    </h3>
+                    <p class="text-[11px] text-blue-400/80 font-mono flex items-center gap-1.5">
+                        <i class="fa-solid fa-cubes"></i> TOTAL PROFESSIONAL TIERS
+                    </p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-300 shadow-inner">
+                    <i class="fa-solid fa-box text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Metric 4: Live Computed Lifetime Enterprise Keys Inventory Tracker -->
+            <div class="glass-panel rounded-2xl p-6 flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-pink-500/50 transition-all duration-300">
+                <div class="space-y-2 z-10">
+                    <p class="text-xs font-mono text-gray-400 uppercase tracking-widest font-semibold">Lifetime Enterprise</p>
+                    <h3 class="text-4xl font-black font-mono text-pink-400 tracking-tight">
+                        {% set count_lt = id | default(0) %}
+                        {% if keys %}
+                            {% for k, v in keys.items() %}
+                                {% if 'Lifetime' in v.plan or 'LIFETIME' in k %}
+                                    {% set count_lt = count_lt + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {{ count_lt }}
+                    </h3>
+                    <p class="text-[11px] text-pink-500/80 font-mono flex items-center gap-1.5">
+                        <i class="fa-solid fa-infinity"></i> INFINITE LIFESPAN UNITS
+                    </p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-pink-500/10 flex items-center justify-center border border-pink-500/20 text-pink-400 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all duration-300 shadow-inner">
+                    <i class="fa-solid fa-infinity text-2xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWO COLUMN INTERACTION LAYER MATRIX INTERFACE -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT COLUMN SUBSECTION PANEL: AUTH REGISTRY MAKER CONTROLS -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden border-t-4 border-t-purple-500">
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 shadow-md">
+                            <i class="fa-solid fa-circle-plus text-base"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-black tracking-wide text-white">Token Registry Factory</h2>
+                            <p class="text-xs text-gray-400 font-mono">Compile cryptographic system keys</p>
+                        </div>
+                    </div>
+
+                    <!-- Generation Form Structure Engine Hooks -->
+                    <form action="/generate" method="POST" class="space-y-6">
+                        
+                        <div class="space-y-2.5">
+                            <label class="text-xs font-mono text-gray-400 font-bold uppercase tracking-widest block">Target System Client Module</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-4 text-gray-500"><i class="fa-solid fa-crosshairs text-sm"></i></span>
+                                <select name="tool" required class="w-full bg-[#090d19] border border-gray-800 rounded-xl pl-11 pr-4 py-3.5 text-sm text-gray-200 outline-none transition-all duration-200 focus:border-purple-500 neon-glow-purple appearance-none cursor-pointer">
+                                    <option value="CODM CHECKER HAZE" selected>CODM CHECKER HAZE</option>
+                                </select>
+                                <span class="absolute right-4 top-4.5 text-gray-500 pointer-events-none text-xs"><i class="fa-solid fa-chevron-down"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            <label class="text-xs font-mono text-gray-400 font-bold uppercase tracking-widest block">Licensing Validity Tier Range</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-4 text-gray-500"><i class="fa-solid fa-clock text-sm"></i></span>
+                                <select name="plan" required class="w-full bg-[#090d19] border border-gray-800 rounded-xl pl-11 pr-4 py-3.5 text-sm text-gray-200 outline-none transition-all duration-200 focus:border-purple-500 neon-glow-purple appearance-none cursor-pointer">
+                                    <option value="" disabled selected hidden>Assign validation time bounds...</option>
+                                    <option value="1 Day Access Tier">1 Day Access Tier</option>
+                                    <option value="7 Days Professional Tier">7 Days Professional Tier</option>
+                                    <option value="Lifetime Enterprise Tier">Lifetime Enterprise Tier</option>
+                                </select>
+                                <span class="absolute right-4 top-4.5 text-gray-500 pointer-events-none text-xs"><i class="fa-solid fa-chevron-down"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button Trigger Engine Configuration -->
+                        <button type="submit" class="w-full mt-2 bg-gradient-to-r from-purple-600 via-purple-700 to-purple-900 hover:from-purple-500 hover:to-purple-800 text-white py-4 px-4 rounded-xl font-bold tracking-widest text-xs uppercase shadow-lg shadow-purple-900/40 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer group">
+                            <i class="fa-solid fa-cube group-hover:rotate-90 transition-transform duration-300 text-sm"></i> Generate Core License Token
+                        </button>
+                    </form>
+                </div>
+
+                <!-- ENDPOINT BINDING INFORMATION UTILITY STORAGE BLOCK -->
+                <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden border-l-4 border-l-blue-500 bg-gray-900/20 space-y-4">
+                    <div>
+                        <h4 class="text-xs font-mono font-black uppercase tracking-widest text-blue-400">Network Endpoint Configuration</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-2">The security layer verification block handles client checking protocols by routing verification parameters straight to this local socket hook link:</p>
+                    </div>
+                    <div class="bg-black/50 border border-gray-800/80 rounded-xl p-3.5 flex flex-col gap-1.5 font-mono text-[11px] select-all">
+                        <span class="text-gray-500 font-bold uppercase tracking-wider">Flask Socket Endpoint:</span>
+                        <span class="text-blue-400 font-bold tracking-wide break-all">http://192.168.100.102:5000/api/validate</span>
+                    </div>
+                </div>
+
+                <!-- FLASK SERVER STATS STRUCT BLOCK -->
+                <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden border-l-4 border-l-emerald-500 bg-gray-900/20 space-y-3 font-mono text-xs text-gray-400">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-emerald-400 mb-1">Server Internal State</h4>
+                    <div class="flex justify-between border-b border-gray-800/50 py-2">
+                        <span class="text-gray-500">Framework Type:</span>
+                        <span class="text-gray-200 font-bold">Flask WSGI Engine</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-800/50 py-2">
+                        <span class="text-gray-500">Listening IP Loop:</span>
+                        <span class="text-gray-200 font-bold">0.0.0.0 (Global Local)</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-gray-500">Active Port Binding:</span>
+                        <span class="text-emerald-400 font-bold">5000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN SUBSECTION PANEL: REAL DATA REGISTERED ALLOCATION TABLE -->
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden border-t-4 border-t-blue-500">
+                    <div class="p-6 border-b border-gray-800/60 bg-gray-900/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-md">
+                                <i class="fa-solid fa-shield-halved text-base"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-black tracking-wide text-white">Registered Authorization Ledger</h2>
+                                <p class="text-xs text-gray-400 font-mono">True real-time dataset rendering mapped configuration rows from keys.json</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- REAL DATA LEDGER TABLE -->
+                    <div class="overflow-x-auto min-w-full">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 text-xs font-mono text-gray-400 tracking-wider uppercase bg-gray-900/50 select-none">
+                                    <th class="py-4.5 px-6 font-bold">Cryptographic License Token Key</th>
+                                    <th class="py-4.5 px-6 font-bold">Subsystem Target</th>
+                                    <th class="py-4.5 px-6 font-bold">Lifespan Duration Badge</th>
+                                    <th class="py-4.5 px-6 font-bold">State</th>
+                                    <th class="py-4.5 px-6 font-bold text-center">Action Control</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800/40 font-mono text-sm">
+                                {% if keys %}
+                                    {% for key, details in keys.items() %}
+                                    <tr class="hover:bg-purple-950/5 border-b border-gray-900 transition-all duration-150 group">
+                                        <!-- Real Key Item Block (Allows text selection copy pasting) -->
+                                        <td class="py-4.5 px-6 font-medium text-purple-400 select-all tracking-wider font-mono text-xs max-w-xs truncate">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fa-solid fa-key text-gray-600 group-hover:text-purple-500 transition-colors"></i>
+                                                <span>{{ key }}</span>
+                                            </div>
+                                        </td>
+                                        <!-- Real Assigned Target Tool Block -->
+                                        <td class="py-4.5 px-6 text-gray-200 font-sans font-bold text-xs">
+                                            {{ details.tool }}
+                                        </td>
+                                        <!-- Real Computed Duration Badge Render -->
+                                        <td class="py-4.5 px-6 text-xs">
+                                            {% if '1 Day' in details.plan or '1DAY' in key %}
+                                                <span class="px-3 py-1 bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/20 font-black text-[10px] tracking-widest uppercase shadow-sm">1 Day Pass</span>
+                                            {% elif '7 Days' in details.plan or '7DAYS' in key %}
+                                                <span class="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-md border border-blue-500/20 font-black text-[10px] tracking-widest uppercase shadow-sm">7 Days Pro</span>
+                                            {% else %}
+                                                <span class="px-3 py-1 bg-gradient-to-r from-pink-500/10 to-purple-500/10 text-pink-400 rounded-md border border-pink-500/20 font-black text-[10px] tracking-widest uppercase shadow-md">Lifetime Key</span>
+                                            {% endif %}
+                                        </td>
+                                        <!-- Real Online State Parameter -->
+                                        <td class="py-4.5 px-6 text-xs">
+                                            <span class="inline-flex items-center gap-2 text-emerald-400 font-black tracking-wide uppercase text-[11px]">
+                                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Verified
+                                            </span>
+                                        </td>
+                                        <!-- Real Core Post Delete Controller Action -->
+                                        <td class="py-4.5 px-6 text-center">
+                                            <form action="/delete/{{ key }}" method="POST" onsubmit="return confirm('Completely purge and scrub this product key token from keys.json database memory?');" class="inline">
+                                                <button type="submit" class="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/20 hover:border-transparent transform hover:scale-105 transition-all duration-200 cursor-pointer shadow-md" title="Scrub Key Frame">
+                                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <!-- Dynamic Block Empty State Fallback Screen Layout -->
+                                    <tr>
+                                        <td colspan="5" class="py-16 px-6 text-center text-gray-500 font-sans">
+                                            <div class="max-w-md mx-auto space-y-4">
+                                                <div class="w-14 h-14 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-600 mx-auto text-xl shadow-inner">
+                                                    <i class="fa-solid fa-box-open"></i>
+                                                </div>
+                                                <div class="space-y-1">
+                                                    <p class="text-sm font-bold text-gray-300 tracking-wide">Database Core Ledger Empty</p>
+                                                    <p class="text-xs text-gray-500 leading-relaxed">No administrative authorization keys mapped inside the system space. Use the factory on the left to allocate keys to the persistent storage registry file layer.</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC REAL-TIME REGISTRY DATA TRANSACTION STREAM LOGGER PANEL -->
+                <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden border border-gray-800/80">
+                    <div class="px-5 py-4 bg-gray-900/80 border-b border-gray-800 flex justify-between items-center select-none">
+                        <div class="flex items-center gap-2.5 text-xs font-mono text-gray-400">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/30 inline-block"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/30 inline-block"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/30 inline-block"></span>
+                            <span class="ml-2 font-black tracking-widest text-gray-300 uppercase text-[11px]"><i class="fa-solid fa-terminal mr-2 text-purple-500 text-sm"></i> Core Transaction Stream Monitor</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-purple-400 font-bold uppercase tracking-widest animate-pulse">Socket Monitor Active</span>
+                    </div>
+                    
+                    <!-- Real Database Stream Feed Terminal Emulator Output -->
+                    <div class="p-6 bg-[#02050b] font-mono text-xs space-y-3 max-h-64 overflow-y-auto text-gray-400 border-t border-black">
+                        <div class="flex items-start gap-2 text-gray-500">
+                            <span class="text-purple-500 font-bold">[SYSTEM_INIT]</span>
+                            <p>Handshake confirmed. Kernel successfully mapped file stream schema straight to storage database file link: <span class="text-gray-300">keys.json</span></p>
+                        </div>
+                        
+                        {% if keys %}
+                            {% for key, details in keys.items() %}
+                            <div class="flex items-start gap-2 text-emerald-400/90 border-l border-emerald-900/40 pl-3.5 my-1">
+                                <span class="text-emerald-500 font-black">[DB_LOADED]</span>
+                                <p>Authorization key recognized inside JSON storage node: <span class="text-white font-bold select-all">{{ key }}</span> bound to module framework &gt;&gt; [{{ details.tool }}] with plan parameters [{{ details.plan }}]</p>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="flex items-start gap-2 text-amber-400/80 bg-amber-950/5 border border-amber-900/20 p-3 rounded-lg">
+                                <span class="text-amber-500 font-black">[WARN]</span>
+                                <p>Memory index currently reads blank. Security socket listener waiting for administrative factory key deployment generation actions...</p>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="flex items-center gap-2 text-purple-400/80 animate-pulse pt-1">
+                            <span class="font-bold text-sm">&gt;</span>
+                            <p class="tracking-wide">Persistent framework listening for live network tool client endpoint token checks on port 5000...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Minimal Modern Sticky Bar Footer Info -->
+    <footer class="border-t border-gray-900/60 mt-16 py-8 text-center text-xs font-mono text-gray-500">
+        <p>&copy; 2026 <span class="text-purple-500 font-bold">HAZE Core Group Engine</span>. All administrative access rights reserved to Root Operator Terminal.</p>
+    </footer>
+
+</body>
+</html>
